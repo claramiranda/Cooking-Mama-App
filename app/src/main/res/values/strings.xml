@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Cooking Mama</string>
+
+
+    <string-array name="tipos_de_receitas">
+        <item>doce</item>
+        <item>Pureza</item>
+        <item>salgado</item>
+    </string-array>
+
+
+</resources>

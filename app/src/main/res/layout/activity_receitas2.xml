@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/colorAccent"
+    tools:context=".ReceitasActivity">
+
+    <TextView
+        android:id="@+id/txtNomeReceita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Receita"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txtTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo"
+        android:textSize="10sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingredientes: "
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/txtIngredientes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Receita"
+            android:textSize="10sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modo de Preparo: "
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/txtPreparo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Receita"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver Tutorial"
+        android:onClick="onClickTutorial"
+        android:id="@+id/buttonLink"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonAnteriorReceita"
+            android:onClick="onClickAnterior"
+            android:text="Receita Anterior"/>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonProximaReceita"
+            android:onClick="onClickProxima"
+            android:text="Próxima receita"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
