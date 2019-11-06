@@ -3,13 +3,9 @@ package br.unicamp.ft.android.projetopureza;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,16 +16,19 @@ import java.util.List;
 public class TodasReceitasActivity extends AppCompatActivity {
 
     //Vetor do tipo receitas
-   -- List<Receita> receitas;
+    ArrayList<Receita> receitas = new ArrayList<>();
     Receita receita;
+
+    Button btnVoltar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_receitas);
+        setContentView(R.layout.activity_todas_receitas);
 
         //Lista de recetias
-        ArrayList<Receita> receitas = todasAsReceitas();
+        receitas = todasAsReceitas();
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -41,14 +40,35 @@ public class TodasReceitasActivity extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(this, "Intent null", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Intent null", Toast.LENGTH_LONG).show();
         }
 
         //inicialização da list view e do adapter
         ListView listview = (ListView) findViewById(R.id.listview);
         AdapterReceitas adapter = new AdapterReceitas(receitas, this);
         listview.setAdapter(adapter);
+
+        btnVoltar = findViewById(R.id.buttonVoltar);
     }
+
+
+    //Chama activity main e volta pro menu principal
+    public void onClickVoltar(View v){
+        Intent intent = new Intent(this, MainActivity.class);
+        Bundle bundle = new Bundle();
+        //bundle.putParcelableArrayList("receitas", new ArrayList<>(receitas));
+       // intent.putExtras(bundle);
+        startActivity(intent);
+        /*
+            Intent intent = new Intent(SendActivity.this, PickContactsActivity.class);
+            Bundle bundle;
+            bundle.putParcelableArrayList("data", cons); // Be sure con is not null here
+            intent.putExtras(bundle);
+         */
+
+
+    }
+
 
     private ArrayList<Receita> todasAsReceitas() {
        return new ArrayList<>(Arrays.asList(
@@ -58,20 +78,5 @@ public class TodasReceitasActivity extends AppCompatActivity {
           new Receita("Pão na chapa","pão e manteiga","salgada","Passar manteiga no pão e aquecer na frigideira","https://www.youtube.com/watch?v=WJX2ojV-A7w")
        ));
     }
-
-    /*
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
-        Intent intent = new Intent(this, MainActivity.class);
-        Bundle bundle = new Bundle();
-        //bundle.putCharSequenceArrayList("receitas",receitas);
-        bundle.putParcelableArrayList("receitas",receitas);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-     */
 
 }

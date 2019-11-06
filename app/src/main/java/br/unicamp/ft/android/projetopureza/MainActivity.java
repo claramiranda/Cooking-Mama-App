@@ -39,12 +39,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickSalgados(View v){
         Intent intent = new Intent(this, ReceitasActivity.class);
+        intent.putExtra("tipo","salgados");
         startActivity(intent);
 
     }
 
     public void onClickDoces(View v){
         Intent intent = new Intent(this, ReceitasActivity.class);
+        intent.putExtra("tipo","doce");
         startActivity(intent);
 
     }

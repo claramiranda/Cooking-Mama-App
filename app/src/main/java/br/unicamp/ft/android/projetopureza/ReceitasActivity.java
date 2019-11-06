@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +17,11 @@ import java.util.List;
 public class ReceitasActivity extends AppCompatActivity {
 
     List<Receita> receitas;
-    int index;
     List<Receita> receitasSalgadas;
     List<Receita> receitasDoces;
+
+    int index;
+    String tipo_receita;
 
     TextView titulo;
     TextView tipo;
@@ -31,13 +30,15 @@ public class ReceitasActivity extends AppCompatActivity {
     Button btnLink;
     Button btnProxima;
     Button btnAnterior;
+    Button btnVoltar;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_receitas2);
+        setContentView(R.layout.activity_receitas);
+
 
         index = 0;
         receitas  = todasAsReceitas();
@@ -49,12 +50,20 @@ public class ReceitasActivity extends AppCompatActivity {
         btnLink = findViewById(R.id.buttonLink);
         btnProxima = findViewById(R.id.buttonProximaReceita);
         btnAnterior = findViewById(R.id.buttonAnteriorReceita);
+        btnVoltar = findViewById(R.id.buttonVoltar);
+
+        Intent myIntent = getIntent();
+        String teste = myIntent.getStringExtra("tipo");
+        Toast.makeText(this, "Tipo: " + tipo_receita, Toast.LENGTH_SHORT).show();
 
         Receita r = receitas.get(index);
         titulo.setText(r.getNome());
         tipo.setText(r.getTipo());
         ingredientes.setText(r.getInstrucoes());
         instrcoes.setText(r.getInstrucoes());
+
+
+
 
     }
 
@@ -92,6 +101,22 @@ public class ReceitasActivity extends AppCompatActivity {
 
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
         startActivity(browserIntent);
+    }
+
+    public void onClickVoltarMenu(View v){
+        Intent intent = new Intent(this, MainActivity.class);
+        Bundle bundle = new Bundle();
+        //bundle.putParcelableArrayList("receitas", new ArrayList<>(receitas));
+        // intent.putExtras(bundle);
+        startActivity(intent);
+        /*
+            Intent intent = new Intent(SendActivity.this, PickContactsActivity.class);
+            Bundle bundle;
+            bundle.putParcelableArrayList("data", cons); // Be sure con is not null here
+            intent.putExtras(bundle);
+         */
+
+
     }
 
 

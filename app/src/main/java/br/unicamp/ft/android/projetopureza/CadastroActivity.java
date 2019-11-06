@@ -55,11 +55,6 @@ public class CadastroActivity extends AppCompatActivity {
 
         //volta pra todas as receitas activity
        Intent intent = new Intent(this, TodasReceitasActivity.class);
-        //
-
-       /* Intent it = new Intent(this, TodasReceitasActivity.class);
-        it.putExtra("receita", receita);
-        startActivity(it);*/
 
 
        //Envio da nova receita cadastrada por parâmetro via intent
