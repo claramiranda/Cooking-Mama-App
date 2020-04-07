@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "418068997728",
+    "firebase_url": "https://cooking-mama-e964a.firebaseio.com",
+    "project_id": "cooking-mama-e964a",
+    "storage_bucket": "cooking-mama-e964a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418068997728:android:7d7a54347c793d203b8505",
+        "android_client_info": {
+          "package_name": "br.unicamp.ft.android.projetopureza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418068997728-ocijisjgrtckgaic1d9tbu9fhuoh7fkn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.unicamp.ft.android.projetopureza",
+            "certificate_hash": "f2d30dc9cb20d8b0515e2fddcea39eae7eb9d276"
+          }
+        },
+        {
+          "client_id": "418068997728-sfim4vs7ul7c1q9deibqo1u4ua6c53rc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Ly-UGsd8F_XZYs826FCLQfLX0E2wLNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418068997728-sfim4vs7ul7c1q9deibqo1u4ua6c53rc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,6 +14,10 @@ public class Receita implements Serializable {
 
 
     //CONSTRUCTOR (obrigatório da classe)
+
+    public Receita() {
+
+    }
     public Receita(int id, String nome, String ingredientes, String tipo, String instrucoes, String link) {
         this.id = id;
         this.nome = nome;
