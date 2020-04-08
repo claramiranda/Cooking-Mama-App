@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -34,22 +37,31 @@ public class TodasReceitasActivity extends AppCompatActivity {
 
     //layout
     Button btnVoltar;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todas_receitas);
 
-        //Lista de receitas
-        //receitas = todasAsReceitas();
-        readDataFromDatabase();
+        btnVoltar = findViewById(R.id.buttonVoltar);
+        textView = findViewById(R.id.txt_view_loading);
 
-        //inicialização da list view e do adapter
+        //chamada
+        DownloadDataFromDatabase myAsyncTask = new DownloadDataFromDatabase();
+        myAsyncTask.execute();
+    }
+
+    //método que alimenta a recycler view
+    public void carregaInterface(ArrayList<Receita> recepies){
+        Log.d("carregaInterface", "chamou o layout");
+        //Toast.makeText(TodasReceitasActivity.this, "Chamou o layout", Toast.LENGTH_SHORT).show();
+
         ListView listview = (ListView) findViewById(R.id.listview);
-        AdapterReceitas adapter = new AdapterReceitas(receitas, this);
+        AdapterReceitas adapter = new AdapterReceitas(recepies, this);
         listview.setAdapter(adapter);
 
-        btnVoltar = findViewById(R.id.buttonVoltar);
+        textView.setText("Conteúdo carregado");
     }
 
     //Chama activity main e volta pro menu principal
@@ -58,26 +70,74 @@ public class TodasReceitasActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    class DownloadDataFromDatabase extends AsyncTask<Void, Void,  ArrayList<Receita>> {
 
-    //aqui eu preciso implementar uma assync task, pq tem um delay entre a chamada do método e o retorno dos dados do database
-    public void readDataFromDatabase() {
-        db.collection("receitas")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("LerReceitas:FIREBASE", document.getId() + " => " + document.getData());
-                                Receita receita = document.toObject(Receita.class);
-                                Log.d("RECEITA:FIREBASE=", receita.getNome());
-                                receitas.add(receita);
+        @Override
+        protected ArrayList<Receita> doInBackground(Void... voids) {
+
+            Log.d("Async:doInBackground", "entrou no doInBackground");
+            //codigo que o firebase me pediu pra implementar pra parar de dar warning
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                    .setTimestampsInSnapshotsEnabled(true)
+                    .build();
+            firestore.setFirestoreSettings(settings);
+
+            //leitura do banco
+            db.collection("receitas")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d("Firestore:readRecepie", document.getId() + " => " + document.getData());
+
+                                    Receita receita = document.toObject(Receita.class);
+                                    Log.d("Salvando a receita:", receita.getNome());
+
+                                    receitas.add(receita);
+                                    publishProgress();
+                                }
+                            } else {
+                                Log.w("Firestore", "Error getting documents.", task.getException());
                             }
-                        } else {
-                            Log.w("LerReceitas:FIREBASE", "Error getting documents.", task.getException());
                         }
-                    }
-                });
+                    });
+
+            //dummie code que eu usei pra validar o tamanho da lista
+            /*int tamanho =  + receitas.size();
+            String texto = Integer.toString(tamanho);
+            Log.d("doInBackground", "vai retornar as receitas agr: " + texto);*/
+
+
+            //O problema está aqui, ele tá retornando essa lista antes de terminar a leitura do metodo interno
+            Log.d("Async:doInBackground", "vai retornar o doInBackground");
+            return receitas;
+        }
+
+
+        //Aparentemente esse método nao está sendo chamado
+        protected void onProgressUpdate(){
+            Log.d("Async:onProgressUpdate", "chamou o update");
+            textView.setText("obtendo conteudo do firebase");
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Receita> rec){
+            Log.d("Async:onPostExecute", "chamou o pós");
+
+            //Não consegui popular a recycler direto daqui entao chamo o método que faz isso na main thread
+            carregaInterface(rec);
+        }
+
+        @Override
+        protected void onPreExecute(){
+            textView.setText("Carregando conteúdo...");
+            Log.d("Async:onPreExecute", "chamou o pré");
+        }
+
     }
 
 }
+

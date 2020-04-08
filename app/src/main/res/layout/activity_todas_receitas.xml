@@ -7,6 +7,15 @@
     android:background="@color/colorAccent"
     tools:context=".TodasReceitasActivity">
 
+    <TextView
+        android:id="@+id/txt_view_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/listview"
