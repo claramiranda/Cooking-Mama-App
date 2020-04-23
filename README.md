@@ -20,6 +20,8 @@ Um app simples de receitas, onde o usuário pode cadastrar suas receitas e ver a
 
 
 # Imagens do App
- - TBD
+ ![Menu Principal](/images/Screenshot_20200423-151936.jpg)
+ ![Tela de Inclusão de Receita](/images/Screenshot_20200423-151948.jpg)
+ ![Ver receita](/images/Screenshot_20200423-152016.jpg)
 
 
